@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V-Lab Download</title>
+<meta name="description" content="V-Lab — برنامج إدارة المختبرات الطبية. نزّل أحدث نسخة لويندوز.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 430 387'%3E%3Cg fill='%2338a3a5'%3E%3Crect height='386.471' width='80' rx='40' transform='rotate(30 360.537 11.9213)' x='360.537' y='11.9213'/%3E%3Crect height='231' width='80' rx='40' transform='rotate(90 249.301 10.2051)' x='249.301' y='10.2051'/%3E%3Cpath d='M20 74.641C8.95 55.51 15.51 31.05 34.64 20 53.77 8.95 78.24 15.51 89.28 34.64L249.28 311.77C260.33 330.9 253.77 355.36 234.64 366.41 215.51 377.46 191.05 370.9 180 351.77L20 74.641Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d0e;
+    --surface: #121617;
+    --surface-high: #172022;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --accent: #38a3a5;
+    --accent-strong: #4fc3c4;
+    --accent-ink: #04191a;
+    --accent-subtle: rgba(56, 163, 165, 0.38);
+    --accent-wash: rgba(56, 163, 165, 0.1);
+    --warn: #e8a24a;
+    --text: #eef2f2;
+    --muted: #8d9a9b;
+    --faint: #5b6869;
+    --radius: 22px;
+    --gap: 14px;
+    --display: "Readex Pro", "IBM Plex Sans Arabic", sans-serif;
+    --body: "IBM Plex Sans Arabic", "Readex Pro", sans-serif;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1f1;
+      --surface: #ffffff;
+      --surface-high: #f6fafa;
+      --border: rgba(10, 30, 32, 0.08);
+      --border-strong: rgba(10, 30, 32, 0.16);
+      --accent: #1f7f81;
+      --accent-strong: #176a6c;
+      --accent-ink: #ffffff;
+      --accent-subtle: rgba(31, 127, 129, 0.35);
+      --accent-wash: rgba(31, 127, 129, 0.08);
+      --warn: #b86e12;
+      --text: #0f1b1c;
+      --muted: #5b6b6c;
+      --faint: #93a1a2;
+      color-scheme: light;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  [lang="en"] body, html[lang="en"] { letter-spacing: 0; }
+  a { color: inherit; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Nav ───────────────────────────── */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0 8px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand svg { width: 30px; height: 27px; fill: var(--accent); }
+  .brand span { font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+  .lang {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: 500 13px var(--display);
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+  }
+  .lang:hover { color: var(--text); border-color: var(--accent-subtle); }
+  .lang svg { width: 15px; height: 15px; }
+
+  /* ── Section headings ──────────────── */
+  .eyebrow {
+    font: 500 12px var(--display);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .section-head { margin: 64px 0 20px; display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .section-head h2 { font: 600 clamp(22px, 3vw, 30px)/1.25 var(--display); letter-spacing: -0.01em; margin-top: 6px; }
+
+  /* ── Bento ─────────────────────────── */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+    margin-top: 18px;
+    grid-template-areas:
+      "hero    hero    offline tests"
+      "hero    hero    backup  tests"
+      "reports history history barcode"
+      "reports news    news    updates";
+  }
+  .cell {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    animation: cellIn .6s cubic-bezier(.16, 1, .3, 1) both;
+    transition:
+      transform .32s cubic-bezier(.34, 1.56, .64, 1),
+      box-shadow .3s ease,
+      border-color .3s ease,
+      opacity .25s ease;
+    will-change: transform;
+  }
+  .cell:hover {
+    transform: translateY(-5px) scale(1.012);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .28);
+    border-color: var(--accent-subtle);
+  }
+  .bento:has(.cell:hover) .cell:not(:hover) { opacity: .62; }
+  @keyframes cellIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .bento > .cell:nth-child(1) { animation-delay: 0ms; }
+  .bento > .cell:nth-child(2) { animation-delay: 60ms; }
+  .bento > .cell:nth-child(3) { animation-delay: 120ms; }
+  .bento > .cell:nth-child(4) { animation-delay: 180ms; }
+  .bento > .cell:nth-child(5) { animation-delay: 240ms; }
+  .bento > .cell:nth-child(6) { animation-delay: 300ms; }
+  .bento > .cell:nth-child(7) { animation-delay: 360ms; }
+  .bento > .cell:nth-child(8) { animation-delay: 420ms; }
+  .bento > .cell:nth-child(9) { animation-delay: 480ms; }
+
+  .ico {
+    width: 22px; height: 22px;
+    color: var(--accent);
+    stroke-width: 1.6;
+    transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+  }
+  .cell:hover .ico { transform: translateY(-3px); }
+  .ico-wrap {
+    width: 42px; height: 42px;
+    display: grid; place-items: center;
+    border-radius: 12px;
+    background: var(--accent-wash);
+    margin-bottom: 16px;
+    flex: none;
+  }
+  .cell h3 { font: 600 17px/1.35 var(--display); letter-spacing: -0.005em; margin-bottom: 6px; }
+  .cell p { color: var(--muted); font-size: 14px; }
+
+  /* Hero */
+  .c-hero {
+    grid-area: hero;
+    padding: 40px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(56,163,165,.22), transparent 55%),
+      var(--surface-high);
+    justify-content: space-between;
+    min-height: 440px;
+  }
+  [dir="ltr"] .c-hero {
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(56,163,165,.22), transparent 55%),
+      var(--surface-high);
+  }
+  .c-hero .mark {
+    position: absolute;
+    inset-inline-start: -40px;
+    bottom: -60px;
+    width: 300px; height: 270px;
+    fill: var(--accent);
+    opacity: .06;
+    pointer-events: none;
+  }
+  .hero-title {
+    font: 700 clamp(30px, 4.2vw, 48px)/1.15 var(--display);
+    letter-spacing: -0.02em;
+    margin: 14px 0 14px;
+    max-width: 14ch;
+  }
+  html[lang="en"] .hero-title { max-width: 16ch; }
+  .hero-sub { color: var(--muted); font-size: 16px; max-width: 46ch; }
+  .dl { position: relative; margin-top: 32px; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    text-decoration: none;
+    font: 600 17px var(--display);
+    padding: 16px 26px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px -8px var(--accent-subtle);
+    transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), background .2s, box-shadow .25s;
+  }
+  .dl-btn:hover { background: var(--accent-strong); transform: translateY(-2px); box-shadow: 0 16px 36px -8px var(--accent-subtle); }
+  .dl-btn:active { transform: translateY(0); }
+  .dl-btn svg { width: 20px; height: 20px; stroke-width: 2.2; }
+  .dl-meta {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .dl-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .dl-meta svg { width: 14px; height: 14px; color: var(--faint); }
+  .dl-meta b { color: var(--text); font-weight: 600; font-family: var(--display); }
+
+  /* Stat */
+  .c-tests { grid-area: tests; justify-content: space-between; }
+  .big {
+    font: 700 72px/1 var(--display);
+    letter-spacing: -0.04em;
+    color: var(--text);
+    direction: ltr;
+    display: inline-block;
+  }
+  .big small { font-size: 34px; color: var(--accent); margin-inline-start: 2px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; direction: ltr; }
+  html[dir="rtl"] .chips { justify-content: flex-end; }
+  .chip {
+    font: 500 11.5px var(--display);
+    color: var(--muted);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+
+  .c-offline { grid-area: offline; }
+  .c-backup  { grid-area: backup; }
+  .c-barcode { grid-area: barcode; }
+  .c-updates { grid-area: updates; }
+
+  /* Reports mock */
+  .c-reports { grid-area: reports; }
+  .sheet {
+    margin-top: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    direction: ltr;
+    font: 400 12px var(--display);
+  }
+  .sheet-head { display: flex; justify-content: space-between; color: var(--faint); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .row { display: grid; grid-template-columns: 1fr auto 20px; gap: 8px; padding: 7px 0; border-bottom: 1px dashed var(--border); align-items: center; }
+  .row:last-child { border-bottom: 0; }
+  .row .n { color: var(--muted); }
+  .row .v { font-weight: 600; color: var(--text); }
+  .flag { font-weight: 700; font-size: 11px; text-align: center; }
+  .flag.h { color: var(--warn); }
+  .flag.l { color: var(--accent-strong); }
+  .c-reports .ico-wrap + h3 { margin-top: 0; }
+  .c-reports p { margin-bottom: 18px; }
+
+  /* History chart */
+  .c-history { grid-area: history; flex-direction: row; gap: 22px; align-items: stretch; }
+  .c-history .txt { flex: 1 1 52%; display: flex; flex-direction: column; }
+  .c-history .viz { flex: 1 1 48%; display: flex; align-items: flex-end; min-width: 0; }
+  .viz svg { width: 100%; height: auto; overflow: visible; }
+  .viz .grid-l { stroke: var(--border-strong); stroke-dasharray: 3 4; }
+  .viz .line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.4s .7s cubic-bezier(.65,0,.35,1) forwards; }
+  .viz .area { fill: url(#fade); opacity: 0; animation: fadeIn .8s 1.4s ease forwards; }
+  .viz .dot { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+  .viz .lbl { fill: var(--faint); font: 500 10px var(--display); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* Barcode */
+  .bars {
+    margin-top: auto;
+    height: 46px;
+    border-radius: 8px;
+    background:
+      repeating-linear-gradient(90deg,
+        var(--text) 0 2px, transparent 2px 4px,
+        var(--text) 4px 5px, transparent 5px 8px,
+        var(--text) 8px 11px, transparent 11px 12px,
+        var(--text) 12px 13px, transparent 13px 17px);
+    opacity: .8;
+    position: relative;
+  }
+  .bars::after {
+    content: "";
+    position: absolute; inset-inline: -6px; top: 50%;
+    height: 2px; background: #ef4f4f;
+    box-shadow: 0 0 10px 2px rgba(239,79,79,.6);
+    animation: scan 2.6s ease-in-out infinite;
+  }
+  @keyframes scan { 0%,100% { transform: translateY(-18px); } 50% { transform: translateY(18px); } }
+  .bar-num { direction: ltr; font: 500 11px var(--display); color: var(--faint); letter-spacing: .3em; margin-top: 6px; text-align: center; }
+
+  /* What's new */
+  .c-news { grid-area: news; background: linear-gradient(180deg, var(--accent-wash), transparent 70%), var(--surface); }
+  .news-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .ver-pill {
+    font: 600 12px var(--display);
+    color: var(--accent);
+    background: var(--accent-wash);
+    border: 1px solid var(--accent-subtle);
+    border-radius: 999px;
+    padding: 3px 10px;
+    direction: ltr;
+  }
+  .news-list { list-style: none; display: grid; gap: 8px; direction: rtl; text-align: right; }
+  .news-list li { position: relative; padding-inline-start: 18px; font-size: 13.5px; color: var(--muted); }
+  .news-list li::before {
+    content: ""; position: absolute; inset-inline-start: 2px; top: .7em;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+  }
+  .news-note { font-size: 12px; color: var(--faint); margin-top: 10px; }
+  .news-note a { color: var(--accent); text-decoration: none; }
+  .news-note a:hover { text-decoration: underline; }
+
+  /* ── Install steps ─────────────────── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+    list-style: none;
+    counter-reset: s;
+  }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    counter-increment: s;
+    transition: border-color .3s, transform .32s cubic-bezier(.34,1.56,.64,1);
+  }
+  .step:hover { border-color: var(--accent-subtle); transform: translateY(-3px); }
+  .step::before {
+    content: counter(s, decimal);
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-subtle);
+    color: var(--accent);
+    font: 600 13px var(--display);
+    margin-bottom: 14px;
+  }
+  .step h4 { font: 600 15px/1.4 var(--display); margin-bottom: 4px; }
+  .step p { color: var(--muted); font-size: 13.5px; }
+  .kbd {
+    display: inline-block;
+    font: 500 12px var(--display);
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 0 6px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* ── Requirements / license strip ──── */
+  .strip {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--gap);
+    margin-top: var(--gap);
+  }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .panel h3 { font: 600 16px var(--display); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .panel h3 svg { width: 18px; height: 18px; color: var(--accent); }
+  .reqs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; list-style: none; }
+  .reqs li { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: var(--muted); }
+  .reqs li svg { width: 16px; height: 16px; color: var(--accent); flex: none; margin-top: 3px; }
+  .reqs b { color: var(--text); font-weight: 600; }
+  .panel p { color: var(--muted); font-size: 13.5px; }
+
+  /* ── Footer / contact ──────────────── */
+  .contact {
+    margin: 64px 0 0;
+    padding: 28px 0 40px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  }
+  .contact h3 { font: 600 18px var(--display); }
+  .contact p { color: var(--muted); font-size: 13.5px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none;
+    font: 500 13px var(--display);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 8px 14px;
+    transition: border-color .2s, background .2s;
+  }
+  .links a:hover { border-color: var(--accent-subtle); background: var(--accent-wash); }
+  .links svg { width: 15px; height: 15px; color: var(--accent); }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+  .copy { color: var(--faint); font-size: 12px; padding-bottom: 32px; }
+
+  /* ── Responsive ────────────────────── */
+  @media (max-width: 960px) {
+    .bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "hero    hero"
+        "tests   offline"
+        "tests   backup"
+        "history history"
+        "reports barcode"
+        "reports updates"
+        "news    news";
+    }
+    .c-hero { min-height: 0; padding: 32px; }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .strip { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .bento {
+      grid-template-columns: 1fr;
+      grid-template-areas: "hero" "tests" "offline" "backup" "history" "reports" "barcode" "updates" "news";
+    }
+    .c-hero { padding: 26px 22px; }
+    .c-history { flex-direction: column; }
+    .steps { grid-template-columns: 1fr; }
+    .reqs { grid-template-columns: 1fr; }
+    .big { font-size: 60px; }
+    .dl-btn { width: 100%; justify-content: center; }
+    .bento:has(.cell:hover) .cell:not(:hover) { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
+    .viz .line { stroke-dashoffset: 0; }
+    .viz .area { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <a class="brand" href="#" aria-label="V-Lab">
+      <svg viewBox="0 0 430 387" aria-hidden="true"><rect height="386.471" width="80" rx="40" transform="rotate(30 360.537 11.9213)" x="360.537" y="11.9213"/><rect height="231" width="80" rx="40" transform="rotate(90 249.301 10.2051)" x="249.301" y="10.2051"/><path d="M20 74.641C8.95431 55.5093 15.5093 31.0457 34.641 20C53.7727 8.95431 78.2363 15.5093 89.282 34.641L249.282 311.769C260.328 330.901 253.773 355.364 234.641 366.41C215.509 377.456 191.046 370.901 180 351.769L20 74.641Z"/></svg>
+      <span>V-Lab</span>
+    </a>
+    <button class="lang" id="lang" type="button"><i data-lucide="languages"></i><span data-i18n="langBtn"></span></button>
+  </nav>
+
+  <main>
+    <section class="bento" aria-label="V-Lab">
+
+      <!-- Hero: download -->
+      <article class="cell c-hero">
+        <svg class="mark" viewBox="0 0 430 387" aria-hidden="true"><rect height="386.471" width="80" rx="40" transform="rotate(30 360.537 11.9213)" x="360.537" y="11.9213"/><rect height="231" width="80" rx="40" transform="rotate(90 249.301 10.2051)" x="249.301" y="10.2051"/><path d="M20 74.641C8.95431 55.5093 15.5093 31.0457 34.641 20C53.7727 8.95431 78.2363 15.5093 89.282 34.641L249.282 311.769C260.328 330.901 253.773 355.364 234.641 366.41C215.509 377.456 191.046 370.901 180 351.769L20 74.641Z"/></svg>
+        <div>
+          <span class="eyebrow" data-i18n="heroEyebrow"></span>
+          <h1 class="hero-title" data-i18n="heroTitle"></h1>
+          <p class="hero-sub" data-i18n="heroSub"></p>
+        </div>
+        <div class="dl">
+          <a class="dl-btn" id="dl" href="https://github.com/ibnmaher/v-lab-releases/releases/download/v1.4.3/V-Lab-Setup-1.4.3.exe">
+            <i data-lucide="download"></i><span data-i18n="dlBtn"></span>
+          </a>
+          <div class="dl-meta">
+            <span><i data-lucide="tag"></i><b class="ltr" id="ver">v1.4.3</b></span>
+            <span><i data-lucide="hard-drive"></i><b class="ltr" id="size">182 MB</b></span>
+            <span><i data-lucide="monitor"></i><span data-i18n="dlOs"></span></span>
+            <span><i data-lucide="calendar"></i><span id="date"></span></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Offline -->
+      <article class="cell c-offline">
+        <div class="ico-wrap"><i data-lucide="wifi-off" class="ico"></i></div>
+        <h3 data-i18n="offlineT"></h3>
+        <p data-i18n="offlineD"></p>
+      </article>
+
+      <!-- Tests stat (tall) -->
+      <article class="cell c-tests">
+        <div>
+          <div class="ico-wrap"><i data-lucide="flask-conical" class="ico"></i></div>
+          <div class="big">250<small>+</small></div>
+          <h3 style="margin-top:10px" data-i18n="testsT"></h3>
+          <p data-i18n="testsD"></p>
+        </div>
+        <div class="chips">
+          <span class="chip">CBC</span><span class="chip">Lipid Profile</span><span class="chip">LFT</span><span class="chip">GUE</span><span class="chip">TORCH</span><span class="chip">HbA1c</span><span class="chip">SFA</span><span class="chip">C&amp;S</span>
+        </div>
+      </article>
+
+      <!-- Backup -->
+      <article class="cell c-backup">
+        <div class="ico-wrap"><i data-lucide="database-backup" class="ico"></i></div>
+        <h3 data-i18n="backupT"></h3>
+        <p data-i18n="backupD"></p>
+      </article>
+
+      <!-- Reports (tall) -->
+      <article class="cell c-reports">
+        <div class="ico-wrap"><i data-lucide="file-text" class="ico"></i></div>
+        <h3 data-i18n="reportsT"></h3>
+        <p data-i18n="reportsD"></p>
+        <div class="sheet" aria-hidden="true">
+          <div class="sheet-head"><span>Test</span><span>Result</span></div>
+          <div class="row"><span class="n">Hemoglobin</span><span class="v">10.8 g/dL</span><span class="flag l">L</span></div>
+          <div class="row"><span class="n">WBC</span><span class="v">7.2 ×10³</span><span class="flag"></span></div>
+          <div class="row"><span class="n">Glucose (F)</span><span class="v">131 mg/dL</span><span class="flag h">H</span></div>
+          <div class="row"><span class="n">Urea</span><span class="v">34 mg/dL</span><span class="flag"></span></div>
+          <div class="row"><span class="n">Creatinine</span><span class="v">0.9 mg/dL</span><span class="flag"></span></div>
+          <div class="row"><span class="n">Platelets</span><span class="v">468 ×10³</span><span class="flag h">H</span></div>
+          <div class="row"><span class="n">Cholesterol</span><span class="v">182 mg/dL</span><span class="flag"></span></div>
+          <div class="row"><span class="n">TSH</span><span class="v">2.1 µIU/mL</span><span class="flag"></span></div>
+        </div>
+      </article>
+
+      <!-- Patient history (wide) -->
+      <article class="cell c-history">
+        <div class="txt">
+          <div class="ico-wrap"><i data-lucide="activity" class="ico"></i></div>
+          <h3 data-i18n="historyT"></h3>
+          <p data-i18n="historyD"></p>
+        </div>
+        <div class="viz" aria-hidden="true">
+          <svg viewBox="0 0 260 120">
+            <defs>
+              <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#38a3a5" stop-opacity=".28"/>
+                <stop offset="1" stop-color="#38a3a5" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="grid-l" x1="0" y1="30" x2="260" y2="30"/>
+            <line class="grid-l" x1="0" y1="80" x2="260" y2="80"/>
+            <text class="lbl" x="0" y="24">HbA1c</text>
+            <path class="area" d="M10 40 L60 34 L110 52 L160 66 L210 74 L250 84 L250 110 L10 110 Z"/>
+            <path class="line" d="M10 40 L60 34 L110 52 L160 66 L210 74 L250 84"/>
+            <circle class="dot" cx="10" cy="40" r="3.5"/><circle class="dot" cx="60" cy="34" r="3.5"/><circle class="dot" cx="110" cy="52" r="3.5"/><circle class="dot" cx="160" cy="66" r="3.5"/><circle class="dot" cx="210" cy="74" r="3.5"/><circle class="dot" cx="250" cy="84" r="4.5"/>
+            <text class="lbl" x="10" y="118" text-anchor="middle">Jan</text>
+            <text class="lbl" x="110" y="118" text-anchor="middle">Apr</text>
+            <text class="lbl" x="210" y="118" text-anchor="middle">Aug</text>
+          </svg>
+        </div>
+      </article>
+
+      <!-- Barcode -->
+      <article class="cell c-barcode">
+        <div class="ico-wrap"><i data-lucide="scan-barcode" class="ico"></i></div>
+        <h3 data-i18n="barcodeT"></h3>
+        <p data-i18n="barcodeD" style="margin-bottom:16px"></p>
+        <div class="bars" aria-hidden="true"></div>
+        <div class="bar-num" aria-hidden="true">000412</div>
+      </article>
+
+      <!-- What's new (wide) -->
+      <article class="cell c-news">
+        <div class="news-top">
+          <h3 style="margin:0" data-i18n="newsT"></h3>
+          <span class="ver-pill" id="news-ver">v1.4.3</span>
+        </div>
+        <ul class="news-list" id="news"></ul>
+        <p class="news-note"><span data-i18n="newsNote"></span> <a id="notes-link" href="https://github.com/ibnmaher/v-lab-releases/releases" target="_blank" rel="noopener" data-i18n="newsAll"></a></p>
+      </article>
+
+      <!-- Updates -->
+      <article class="cell c-updates">
+        <div class="ico-wrap"><i data-lucide="refresh-cw" class="ico"></i></div>
+        <h3 data-i18n="updatesT"></h3>
+        <p data-i18n="updatesD"></p>
+      </article>
+    </section>
+
+    <!-- Install -->
+    <div class="section-head">
+      <div>
+        <span class="eyebrow" data-i18n="installEyebrow"></span>
+        <h2 data-i18n="installT"></h2>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step"><h4 data-i18n="s1T"></h4><p data-i18n="s1D"></p></li>
+      <li class="step"><h4 data-i18n="s2T"></h4><p data-i18n="s2D"></p></li>
+      <li class="step"><h4 data-i18n="s3T"></h4><p data-i18n="s3D"></p></li>
+      <li class="step"><h4 data-i18n="s4T"></h4><p data-i18n="s4D"></p></li>
+    </ol>
+
+    <div class="strip">
+      <div class="panel">
+        <h3><i data-lucide="cpu"></i><span data-i18n="reqT"></span></h3>
+        <ul class="reqs">
+          <li><i data-lucide="check"></i><span data-i18n="req1"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="req2"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="req3"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="req4"></span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3><i data-lucide="key-round"></i><span data-i18n="licT"></span></h3>
+        <p data-i18n="licD"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="contact">
+      <div>
+        <h3 data-i18n="contactT"></h3>
+        <p data-i18n="contactD"></p>
+      </div>
+      <div class="links">
+        <a href="https://wa.me/9647510061066" target="_blank" rel="noopener"><i data-lucide="message-circle"></i><span class="ltr">0751 006 1066</span></a>
+        <a href="https://wa.me/9647765177464" target="_blank" rel="noopener"><i data-lucide="message-circle"></i><span class="ltr">0776 517 7464</span></a>
+        <a href="mailto:abdulrahman.maher.96@gmail.com"><i data-lucide="mail"></i><span data-i18n="email"></span></a>
+        <a href="https://www.linkedin.com/in/abdulrahman-m/" target="_blank" rel="noopener"><i data-lucide="linkedin"></i><span data-i18n="linkedin"></span></a>
+      </div>
+    </div>
+    <p class="copy">© <span id="year"></span> V-Lab</p>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script>
+(function () {
+  var RELEASES = "https://github.com/ibnmaher/v-lab-releases/releases";
+  var API = "https://api.github.com/repos/ibnmaher/v-lab-releases/releases/latest";
+
+  // Shown until (or if) the live release can't be fetched.
+  var release = {
+    version: "1.4.3",
+    url: RELEASES + "/download/v1.4.3/V-Lab-Setup-1.4.3.exe",
+    bytes: 191092501,
+    date: "2026-10-14T00:41:54Z",
+    page: RELEASES + "/tag/v1.4.3",
+    notes: [
+      "نسخ احتياطي تلقائي: نسخة كاملة من بيانات المختبر كل يوم دون الحاجة لفتح البرنامج، ويُحتفظ بآخر 14 نسخة",
+      "نسخة ثانية على فلاشة USB أو قرص آخر: اختر المجلد مرة واحدة وتُنسخ إليه كل نسخة جديدة",
+      "زر \"انسخ الآن\" لإنشاء نسخة احتياطية فوراً، مع عرض وقت وحجم آخر نسخة",
+      "تنبيه للمسؤول عند تسجيل الدخول إذا فشلت آخر نسخة احتياطية أو تأخرت أكثر من 3 أيام"
+    ]
+  };
+
+  var T = {
+    ar: {
+      langBtn: "English",
+      heroEyebrow: "برنامج إدارة المختبرات الطبية",
+      heroTitle: "مختبرك كله في برنامج واحد.",
+      heroSub: "المرضى والفواتير والنتائج والتقارير والمخزن والمالية — يعمل على حاسبة المختبر بدون إنترنت، ويُثبّت بخطوة واحدة.",
+      dlBtn: "تنزيل V-Lab لويندوز",
+      dlOs: "ويندوز 10 / 11",
+      offlineT: "بدون إنترنت",
+      offlineD: "ملف تثبيت واحد فيه كل شيء: البرنامج وقاعدة البيانات والخدمات. لا إعدادات يدوية.",
+      testsT: "فحص جاهز من أول يوم",
+      testsD: "مع القيم الطبيعية والوحدات، و23 مجموعة مسعّرة مثل Lipid Profile و Liver Functions.",
+      backupT: "نسخ احتياطي يومي",
+      backupD: "نسخة كاملة كل يوم تلقائياً، ونسخة ثانية على فلاشة USB.",
+      reportsT: "تقارير نتائج احترافية",
+      reportsD: "ترويسة مختبرك، علامات H / L، تقرير زرع وحساسية، وإرسال النتائج عبر واتساب.",
+      historyT: "سجل المريض عبر الزمن",
+      historyD: "كل زيارات المريض في خط زمني، وجدول نتائج يقارن كل فحص عبر آخر الزيارات.",
+      barcodeT: "باركود وملصقات أنابيب",
+      barcodeD: "ملصقة لكل أنبوب، ومسح الوصل يفتح نتائج الزيارة مباشرة.",
+      newsT: "الجديد في آخر إصدار",
+      newsNote: "",
+      newsAll: "كل الإصدارات ←",
+      updatesT: "تحديث من داخل البرنامج",
+      updatesD: "الإعدادات ← التحديثات. بدون إعادة تثبيت وبدون فقدان بيانات.",
+      installEyebrow: "التثبيت",
+      installT: "جاهز للعمل خلال دقائق",
+      s1T: "نزّل الملف",
+      s1D: "انسخه إلى حاسبة المختبر التي ستعمل عليها.",
+      s2T: "شغّله كمسؤول",
+      s2D: "زر الفأرة الأيمن ← تشغيل كمسؤول. إذا ظهر تحذير ويندوز اختر <span class=\"kbd\">More info</span> ثم <span class=\"kbd\">Run anyway</span>",
+      s3T: "انتظر قليلاً",
+      s3D: "تجهيز قاعدة البيانات يأخذ من 2 إلى 5 دقائق ولا يحتاج أي إدخال.",
+      s4T: "أنشئ حساب المدير",
+      s4D: "أول حساب هو المدير، ومنه تضيف باقي المستخدمين وترويسة التقرير.",
+      reqT: "متطلبات الجهاز",
+      req1: "<b>ويندوز 10 أو 11</b> نسخة 64 بت",
+      req2: "<b>حساب مسؤول</b> على الحاسبة",
+      req3: "<b>1.5 غيغابايت</b> مساحة فارغة على الأقل",
+      req4: "<b>لا يحتاج إنترنت</b> للعمل اليومي",
+      licT: "الترخيص",
+      licD: "اشتراك شهري أو سنوي لكل جهاز، مع تنبيه قبل انتهاء الاشتراك. تواصل معنا لتفعيل نسختك.",
+      contactT: "تحتاج مساعدة في التثبيت؟",
+      contactD: "تواصل مع المطوّر مباشرة عبر واتساب أو البريد.",
+      email: "البريد الإلكتروني",
+      linkedin: "لينكدإن",
+      released: "صدر في "
+    },
+    en: {
+      langBtn: "العربية",
+      heroEyebrow: "Clinical lab management",
+      heroTitle: "Your whole lab in one app.",
+      heroSub: "Patients, invoices, results, reports, storage and finance — runs on the lab PC without internet, installed in one step.",
+      dlBtn: "Download V-Lab for Windows",
+      dlOs: "Windows 10 / 11",
+      offlineT: "Works offline",
+      offlineD: "One installer with everything: the app, its database and services. Nothing to set up by hand.",
+      testsT: "tests ready on day one",
+      testsD: "With normal ranges and units, plus 23 priced groups like Lipid Profile and Liver Functions.",
+      backupT: "Daily backups",
+      backupD: "A full copy of your data every day, plus a second copy on a USB drive.",
+      reportsT: "Professional result reports",
+      reportsD: "Your letterhead, H / L flags, culture & sensitivity reports, and results sent over WhatsApp.",
+      historyT: "Patient history over time",
+      historyD: "Every visit on a timeline, and a results table that tracks each test across recent visits.",
+      barcodeT: "Barcodes & tube labels",
+      barcodeD: "A label per tube; scanning a receipt opens that visit's results.",
+      newsT: "New in the latest release",
+      newsNote: "Release notes are in Arabic.",
+      newsAll: "All releases →",
+      updatesT: "Updates from inside the app",
+      updatesD: "Settings → Updates. No reinstall, no lost data.",
+      installEyebrow: "Install",
+      installT: "Up and running in minutes",
+      s1T: "Download the installer",
+      s1D: "Copy it to the lab PC that will run V-Lab.",
+      s2T: "Run as administrator",
+      s2D: "Right-click → Run as administrator. If Windows warns you, choose <span class=\"kbd\">More info</span> then <span class=\"kbd\">Run anyway</span>.",
+      s3T: "Give it a few minutes",
+      s3D: "Setting up the database takes 2–5 minutes and needs no input.",
+      s4T: "Create the admin account",
+      s4D: "The first account is the admin — add your staff and report letterhead from there.",
+      reqT: "System requirements",
+      req1: "<b>Windows 10 or 11</b>, 64-bit",
+      req2: "<b>An administrator account</b> on the PC",
+      req3: "<b>1.5 GB</b> free disk space or more",
+      req4: "<b>No internet needed</b> for daily work",
+      licT: "Licensing",
+      licD: "Monthly or yearly subscription per PC, with a reminder before it expires. Get in touch to activate your copy.",
+      contactT: "Need help installing?",
+      contactD: "Reach the developer directly on WhatsApp or by email.",
+      email: "Email",
+      linkedin: "LinkedIn",
+      released: "Released "
+    }
+  };
+
+  var lang = "ar";
+  // Arabic first: that's the language labs use the app in.
+  try { lang = localStorage.getItem("vlab-dl-lang") || "ar"; } catch (e) {}
+  if (/[?&]lang=en/.test(location.search)) lang = "en";
+
+  function fmtDate(iso) {
+    try {
+      return new Date(iso).toLocaleDateString(lang === "ar" ? "ar-IQ" : "en-GB", { year: "numeric", month: "long", day: "numeric" });
+    } catch (e) { return iso.slice(0, 10); }
+  }
+
+  function render() {
+    var dict = T[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      el.innerHTML = dict[el.getAttribute("data-i18n")] || "";
+    });
+    document.getElementById("dl").href = release.url;
+    document.getElementById("ver").textContent = "v" + release.version;
+    document.getElementById("news-ver").textContent = "v" + release.version;
+    document.getElementById("size").textContent = Math.round(release.bytes / 1048576) + " MB";
+    document.getElementById("date").textContent = dict.released + fmtDate(release.date);
+    document.getElementById("notes-link").href = RELEASES;
+    var ul = document.getElementById("news");
+    ul.innerHTML = "";
+    release.notes.slice(0, 4).forEach(function (n) {
+      var li = document.createElement("li");
+      li.textContent = n;
+      ul.appendChild(li);
+    });
+  }
+
+  document.getElementById("lang").addEventListener("click", function () {
+    lang = lang === "ar" ? "en" : "ar";
+    try { localStorage.setItem("vlab-dl-lang", lang); } catch (e) {}
+    render();
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+  render();
+  if (window.lucide) lucide.createIcons();
+
+  // Live release info, so the page never needs editing after a release.
+  fetch(API, { headers: { Accept: "application/vnd.github+json" } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (r) {
+      var exe = (r.assets || []).filter(function (a) { return /^V-Lab-Setup-.*\.exe$/i.test(a.name); })[0];
+      if (!exe) return;
+      release.version = String(r.tag_name || "").replace(/^v/, "") || release.version;
+      release.url = exe.browser_download_url;
+      release.bytes = exe.size;
+      release.date = r.published_at || release.date;
+      release.page = r.html_url || release.page;
+      var notes = String(r.body || "").split(/\r?\n/)
+        .map(function (l) { return l.replace(/^\s*[-*]\s*/, "").trim(); })
+        .filter(Boolean)
+        .map(function (l) { return l.replace(/\s*في الإعدادات ← .*$|\s*\(الإعدادات ← [^)]*\)/, ""); });
+      if (notes.length) release.notes = notes;
+      render();
+    })
+    .catch(function () { /* keep the built-in fallback */ });
+})();
+</script>
+</body>
+</html>
