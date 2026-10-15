@@ -223,6 +223,18 @@
   .dl-meta svg { width: 14px; height: 14px; color: var(--faint); }
   .dl-meta b { color: var(--text); font-weight: 600; font-family: var(--display); }
 
+  .trial {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 18px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--accent-wash);
+    border: 1px solid var(--accent-subtle);
+    font: 500 13px var(--display);
+    color: var(--text);
+  }
+  .trial svg { width: 15px; height: 15px; color: var(--accent); }
+
   /* Stat */
   .c-tests { grid-area: tests; justify-content: space-between; }
   .big {
@@ -477,15 +489,16 @@
           <p class="hero-sub" data-i18n="heroSub"></p>
         </div>
         <div class="dl">
-          <a class="dl-btn" id="dl" href="https://github.com/ibnmaher/v-lab-releases/releases/download/v1.4.3/V-Lab-Setup-1.4.3.exe">
+          <a class="dl-btn" id="dl" href="https://github.com/ibnmaher/v-lab-releases/releases/download/v1.4.4/V-Lab-Setup-1.4.4.exe">
             <i data-lucide="download"></i><span data-i18n="dlBtn"></span>
           </a>
           <div class="dl-meta">
-            <span><i data-lucide="tag"></i><b class="ltr" id="ver">v1.4.3</b></span>
-            <span><i data-lucide="hard-drive"></i><b class="ltr" id="size">182 MB</b></span>
+            <span><i data-lucide="tag"></i><b class="ltr" id="ver">v1.4.4</b></span>
+            <span><i data-lucide="hard-drive"></i><b class="ltr" id="size">181 MB</b></span>
             <span><i data-lucide="monitor"></i><span data-i18n="dlOs"></span></span>
             <span><i data-lucide="calendar"></i><span id="date"></span></span>
           </div>
+          <p class="trial"><i data-lucide="gift"></i><span data-i18n="trialLine"></span></p>
         </div>
       </article>
 
@@ -575,7 +588,7 @@
       <article class="cell c-news">
         <div class="news-top">
           <h3 style="margin:0" data-i18n="newsT"></h3>
-          <span class="ver-pill" id="news-ver">v1.4.3</span>
+          <span class="ver-pill" id="news-ver">v1.4.4</span>
         </div>
         <ul class="news-list" id="news"></ul>
         <p class="news-note"><span data-i18n="newsNote"></span> <a id="notes-link" href="https://github.com/ibnmaher/v-lab-releases/releases" target="_blank" rel="noopener" data-i18n="newsAll"></a></p>
@@ -645,16 +658,16 @@
 
   // Shown until (or if) the live release can't be fetched.
   var release = {
-    version: "1.4.3",
-    url: RELEASES + "/download/v1.4.3/V-Lab-Setup-1.4.3.exe",
-    bytes: 191092501,
-    date: "2026-10-14T00:41:54Z",
-    page: RELEASES + "/tag/v1.4.3",
+    version: "1.4.4",
+    url: RELEASES + "/download/v1.4.4/V-Lab-Setup-1.4.4.exe",
+    bytes: 189758258,
+    date: "2026-10-15T15:40:14Z",
+    page: RELEASES + "/tag/v1.4.4",
     notes: [
-      "نسخ احتياطي تلقائي: نسخة كاملة من بيانات المختبر كل يوم دون الحاجة لفتح البرنامج، ويُحتفظ بآخر 14 نسخة",
-      "نسخة ثانية على فلاشة USB أو قرص آخر: اختر المجلد مرة واحدة وتُنسخ إليه كل نسخة جديدة",
-      "زر \"انسخ الآن\" لإنشاء نسخة احتياطية فوراً، مع عرض وقت وحجم آخر نسخة",
-      "تنبيه للمسؤول عند تسجيل الدخول إذا فشلت آخر نسخة احتياطية أو تأخرت أكثر من 3 أيام"
+      "حفظ تلقائي في صفحة النتائج وصفحة الفحص: تُحفظ التعديلات أثناء الكتابة مع عرض حالة الحفظ، وتنبيه قبل المغادرة إذا بقيت قيمة طبيعية غير محفوظة",
+      "تشفير النسخ الاحتياطية بكلمة سر، فلا يستطيع أحد قراءة بيانات المرضى إذا فُقدت فلاشة USB",
+      "تنبيه عند استعادة نسخة احتياطية من مختبر آخر، أو عند استعادة بعض الأجزاء فقط",
+      "التكبير: تكبير أو تصغير حجم عرض البرنامج كله، ويُحفظ على الجهاز"
     ]
   };
 
@@ -698,8 +711,9 @@
       req2: "<b>حساب مسؤول</b> على الحاسبة",
       req3: "<b>1.5 غيغابايت</b> مساحة فارغة على الأقل",
       req4: "<b>لا يحتاج إنترنت</b> للعمل اليومي",
-      licT: "الترخيص",
-      licD: "اشتراك شهري أو سنوي لكل جهاز، مع تنبيه قبل انتهاء الاشتراك. تواصل معنا لتفعيل نسختك.",
+      licT: "تجربة مجانية ثم اشتراك",
+      licD: "بعد التثبيت أرسل لنا رمز الجهاز من شاشة الترخيص، فنرسل لك مفتاح تجربة مجانية لمدة 14 يوماً بكل الميزات. بعدها اشتراك شهري أو سنوي لكل جهاز، وتبقى كل بياناتك كما هي.",
+      trialLine: "جرّبه مجاناً لمدة 14 يوماً بكل الميزات",
       contactT: "تحتاج مساعدة في التثبيت؟",
       contactD: "تواصل مع المطوّر مباشرة عبر واتساب أو البريد.",
       email: "البريد الإلكتروني",
@@ -745,8 +759,9 @@
       req2: "<b>An administrator account</b> on the PC",
       req3: "<b>1.5 GB</b> free disk space or more",
       req4: "<b>No internet needed</b> for daily work",
-      licT: "Licensing",
-      licD: "Monthly or yearly subscription per PC, with a reminder before it expires. Get in touch to activate your copy.",
+      licT: "Free trial, then subscribe",
+      licD: "After installing, send us the machine code from the license screen and we'll send a free 14-day trial key with every feature. After that it's a monthly or yearly subscription per PC, and all your data stays.",
+      trialLine: "Try it free for 14 days, every feature included",
       contactT: "Need help installing?",
       contactD: "Reach the developer directly on WhatsApp or by email.",
       email: "Email",
