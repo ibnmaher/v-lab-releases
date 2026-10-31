@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>V-Lab Download</title>
-<meta name="description" content="V-Lab — برنامج إدارة المختبرات الطبية. نزّل أحدث نسخة لويندوز.">
+<meta name="description" content="V-Lab: برنامج إدارة المختبرات الطبية. نزّل أحدث نسخة لويندوز.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 430 387'%3E%3Cg fill='%2338a3a5'%3E%3Crect height='386.471' width='80' rx='40' transform='rotate(30 360.537 11.9213)' x='360.537' y='11.9213'/%3E%3Crect height='231' width='80' rx='40' transform='rotate(90 249.301 10.2051)' x='249.301' y='10.2051'/%3E%3Cpath d='M20 74.641C8.95 55.51 15.51 31.05 34.64 20 53.77 8.95 78.24 15.51 89.28 34.64L249.28 311.77C260.33 330.9 253.77 355.36 234.64 366.41 215.51 377.46 191.05 370.9 180 351.77L20 74.641Z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -403,6 +403,64 @@
   .reqs b { color: var(--text); font-weight: 600; }
   .panel p { color: var(--muted); font-size: 13.5px; }
 
+  /* ── Pricing (bento row) / manuals ── */
+  .pricing {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+    grid-template-areas: "yearly yearly monthly trial";
+  }
+  .c-yearly {
+    grid-area: yearly;
+    padding: 32px;
+    border-color: var(--accent-subtle);
+    background:
+      radial-gradient(110% 120% at 100% 0%, rgba(56,163,165,.2), transparent 60%),
+      var(--surface-high);
+  }
+  [dir="ltr"] .c-yearly { background: radial-gradient(110% 120% at 0% 0%, rgba(56,163,165,.2), transparent 60%), var(--surface-high); }
+  .c-monthly { grid-area: monthly; }
+  .c-trial { grid-area: trial; background: linear-gradient(180deg, var(--accent-wash), transparent 70%), var(--surface); }
+  .c-trial .big { font-size: 56px; }
+  .c-trial h3 { margin-top: 8px; }
+  .plan-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .save {
+    font: 600 12.5px var(--display);
+    color: var(--accent-ink);
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 4px 12px;
+  }
+  .price-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; margin: 18px 0 10px; }
+  .was { font: 500 22px var(--display); color: var(--faint); text-decoration-thickness: 2px; text-decoration-color: var(--warn); }
+  .price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; margin: 10px 0 8px; color: var(--muted); font-size: 13.5px; }
+  .price-row .price { margin: 0; }
+  .price b { font: 700 34px/1.1 var(--display); letter-spacing: -0.02em; color: var(--text); }
+  .c-yearly .price b { font-size: 52px; letter-spacing: -0.03em; }
+  .c-manual {
+    margin-top: 64px;
+    flex-direction: row; align-items: center; gap: 20px; flex-wrap: wrap;
+    padding: 28px 32px;
+  }
+  .c-manual .ico-wrap { margin: 0; }
+  .man-txt { flex: 1 1 280px; }
+  .man-txt h2 { font: 600 clamp(20px, 2.4vw, 24px)/1.3 var(--display); }
+  .man-links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .man-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none;
+    font: 500 14px var(--display);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 11px 18px;
+    transition: border-color .2s, background .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .man-btn:hover { border-color: var(--accent-subtle); background: var(--accent-wash); transform: translateY(-2px); }
+  .man-btn:active { transform: translateY(0); }
+  .man-btn svg { width: 17px; height: 17px; color: var(--accent); }
+  /* Release facts stay hidden until the live release (or the fallback) is known, so an old version never flashes. */
+  html:not(.rel-ready) .rel { visibility: hidden; }
+
   /* ── Footer / contact ──────────────── */
   .contact {
     margin: 64px 0 0;
@@ -444,6 +502,7 @@
     .c-hero { min-height: 0; padding: 32px; }
     .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .strip { grid-template-columns: 1fr; }
+    .pricing { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "yearly yearly" "monthly trial"; }
   }
   @media (max-width: 560px) {
     .wrap { padding: 0 16px; }
@@ -455,6 +514,11 @@
     .c-history { flex-direction: column; }
     .steps { grid-template-columns: 1fr; }
     .reqs { grid-template-columns: 1fr; }
+    .pricing { grid-template-columns: 1fr; grid-template-areas: "yearly" "monthly" "trial"; }
+    .c-yearly { padding: 26px 22px; }
+    .c-manual { padding: 24px 22px; }
+    .man-links, .man-btn { width: 100%; }
+    .man-btn { justify-content: center; }
     .big { font-size: 60px; }
     .dl-btn { width: 100%; justify-content: center; }
     .bento:has(.cell:hover) .cell:not(:hover) { opacity: 1; }
@@ -489,14 +553,14 @@
           <p class="hero-sub" data-i18n="heroSub"></p>
         </div>
         <div class="dl">
-          <a class="dl-btn" id="dl" href="https://github.com/ibnmaher/v-lab-releases/releases/download/v1.4.4/V-Lab-Setup-1.4.4.exe">
+          <a class="dl-btn" id="dl" href="https://github.com/ibnmaher/v-lab-releases/releases/latest">
             <i data-lucide="download"></i><span data-i18n="dlBtn"></span>
           </a>
           <div class="dl-meta">
-            <span><i data-lucide="tag"></i><b class="ltr" id="ver">v1.4.4</b></span>
-            <span><i data-lucide="hard-drive"></i><b class="ltr" id="size">181 MB</b></span>
+            <span><i data-lucide="tag"></i><b class="ltr rel" id="ver"></b></span>
+            <span><i data-lucide="hard-drive"></i><b class="ltr rel" id="size"></b></span>
             <span><i data-lucide="monitor"></i><span data-i18n="dlOs"></span></span>
-            <span><i data-lucide="calendar"></i><span id="date"></span></span>
+            <span><i data-lucide="calendar"></i><span id="date" class="rel"></span></span>
           </div>
           <p class="trial"><i data-lucide="gift"></i><span data-i18n="trialLine"></span></p>
         </div>
@@ -588,9 +652,9 @@
       <article class="cell c-news">
         <div class="news-top">
           <h3 style="margin:0" data-i18n="newsT"></h3>
-          <span class="ver-pill" id="news-ver">v1.4.4</span>
+          <span class="ver-pill rel" id="news-ver"></span>
         </div>
-        <ul class="news-list" id="news"></ul>
+        <ul class="news-list rel" id="news"></ul>
         <p class="news-note"><span data-i18n="newsNote"></span> <a id="notes-link" href="https://github.com/ibnmaher/v-lab-releases/releases" target="_blank" rel="noopener" data-i18n="newsAll"></a></p>
       </article>
 
@@ -631,6 +695,46 @@
         <p data-i18n="licD"></p>
       </div>
     </div>
+
+    <!-- Pricing -->
+    <div class="section-head" id="pricing"><h2 data-i18n="priceT"></h2></div>
+    <section class="pricing" aria-labelledby="pricing">
+      <article class="cell c-yearly">
+        <div class="plan-top">
+          <h3 data-i18n="planYearly"></h3>
+          <span class="save" data-i18n="save"></span>
+        </div>
+        <div class="price-row">
+          <s class="was ltr">360,000</s>
+          <div class="price"><b class="ltr">240,000</b><span data-i18n="perYear"></span></div>
+        </div>
+        <p data-i18n="planYearlyD"></p>
+      </article>
+      <article class="cell c-monthly">
+        <h3 data-i18n="planMonthly"></h3>
+        <div class="price"><b class="ltr">30,000</b><span data-i18n="perMonth"></span></div>
+        <p data-i18n="planMonthlyD"></p>
+      </article>
+      <article class="cell c-trial">
+        <div class="ico-wrap"><i data-lucide="gift" class="ico"></i></div>
+        <div class="big">14</div>
+        <h3 data-i18n="trialT"></h3>
+        <p data-i18n="trialD"></p>
+      </article>
+    </section>
+
+    <!-- Manuals -->
+    <section class="cell c-manual">
+      <div class="ico-wrap"><i data-lucide="book-open" class="ico"></i></div>
+      <div class="man-txt">
+        <h2 data-i18n="manT"></h2>
+        <p data-i18n="manD"></p>
+      </div>
+      <div class="man-links">
+        <a class="man-btn" href="manuals/v-lab-manual-ar.pdf" target="_blank" rel="noopener"><i data-lucide="file-down"></i><span data-i18n="manAr"></span></a>
+        <a class="man-btn" href="manuals/v-lab-manual-en.pdf" target="_blank" rel="noopener"><i data-lucide="file-down"></i><span data-i18n="manEn"></span></a>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -656,10 +760,10 @@
   var RELEASES = "https://github.com/ibnmaher/v-lab-releases/releases";
   var API = "https://api.github.com/repos/ibnmaher/v-lab-releases/releases/latest";
 
-  // Shown until (or if) the live release can't be fetched.
+  // Shown only if the live release can't be fetched; until then the version spots stay hidden.
   var release = {
     version: "1.4.4",
-    url: RELEASES + "/download/v1.4.4/V-Lab-Setup-1.4.4.exe",
+    url: RELEASES + "/latest",
     bytes: 189758258,
     date: "2026-10-15T15:40:14Z",
     page: RELEASES + "/tag/v1.4.4",
@@ -676,7 +780,7 @@
       langBtn: "English",
       heroEyebrow: "برنامج إدارة المختبرات الطبية",
       heroTitle: "مختبرك كله في برنامج واحد.",
-      heroSub: "المرضى والفواتير والنتائج والتقارير والمخزن والمالية — يعمل على حاسبة المختبر بدون إنترنت، ويُثبّت بخطوة واحدة.",
+      heroSub: "المرضى والفواتير والنتائج والتقارير والمخزن والمالية. يعمل على حاسبة المختبر بدون إنترنت، ويُثبّت بخطوة واحدة.",
       dlBtn: "تنزيل V-Lab لويندوز",
       dlOs: "ويندوز 10 / 11",
       offlineT: "بدون إنترنت",
@@ -714,6 +818,20 @@
       licT: "تجربة مجانية ثم اشتراك",
       licD: "بعد التثبيت أرسل لنا رمز الجهاز من شاشة الترخيص، فنرسل لك مفتاح تجربة مجانية لمدة 14 يوماً بكل الميزات. بعدها اشتراك شهري أو سنوي لكل جهاز، وتبقى كل بياناتك كما هي.",
       trialLine: "جرّبه مجاناً لمدة 14 يوماً بكل الميزات",
+      priceT: "اشتراك واحد لكل جهاز، بكل الميزات",
+      planYearly: "سنوي",
+      planMonthly: "شهري",
+      save: "خصم 33%",
+      perYear: "دينار / سنة",
+      perMonth: "دينار / شهر",
+      planYearlyD: "يعادل 20,000 دينار شهرياً. كل الميزات والتحديثات والدعم.",
+      planMonthlyD: "كل الميزات والتحديثات والدعم، تدفع شهراً بشهر.",
+      trialT: "يوماً تجربة مجانية",
+      trialD: "جرّب كل الميزات قبل أن تدفع. تبقى بياناتك عند الاشتراك.",
+      manT: "دليل المستخدم المصوّر",
+      manD: "شرح كل شاشة بالصور، من أول تسجيل إلى التقارير. PDF للطباعة أو القراءة.",
+      manAr: "الدليل بالعربية",
+      manEn: "الدليل بالإنجليزية",
       contactT: "تحتاج مساعدة في التثبيت؟",
       contactD: "تواصل مع المطوّر مباشرة عبر واتساب أو البريد.",
       email: "البريد الإلكتروني",
@@ -724,7 +842,7 @@
       langBtn: "العربية",
       heroEyebrow: "Clinical lab management",
       heroTitle: "Your whole lab in one app.",
-      heroSub: "Patients, invoices, results, reports, storage and finance — runs on the lab PC without internet, installed in one step.",
+      heroSub: "Patients, invoices, results, reports, storage and finance. Runs on the lab PC without internet, installed in one step.",
       dlBtn: "Download V-Lab for Windows",
       dlOs: "Windows 10 / 11",
       offlineT: "Works offline",
@@ -751,9 +869,9 @@
       s2T: "Run as administrator",
       s2D: "Right-click → Run as administrator. If Windows warns you, choose <span class=\"kbd\">More info</span> then <span class=\"kbd\">Run anyway</span>.",
       s3T: "Give it a few minutes",
-      s3D: "Setting up the database takes 2–5 minutes and needs no input.",
+      s3D: "Setting up the database takes 2-5 minutes and needs no input.",
       s4T: "Create the admin account",
-      s4D: "The first account is the admin — add your staff and report letterhead from there.",
+      s4D: "The first account is the admin. Add your staff and report letterhead from there.",
       reqT: "System requirements",
       req1: "<b>Windows 10 or 11</b>, 64-bit",
       req2: "<b>An administrator account</b> on the PC",
@@ -762,6 +880,20 @@
       licT: "Free trial, then subscribe",
       licD: "After installing, send us the machine code from the license screen and we'll send a free 14-day trial key with every feature. After that it's a monthly or yearly subscription per PC, and all your data stays.",
       trialLine: "Try it free for 14 days, every feature included",
+      priceT: "One subscription per PC, every feature",
+      planYearly: "Yearly",
+      planMonthly: "Monthly",
+      save: "33% off",
+      perYear: "IQD / year",
+      perMonth: "IQD / month",
+      planYearlyD: "Works out to 20,000 IQD a month. Every feature, update and support.",
+      planMonthlyD: "Every feature, update and support, paid month to month.",
+      trialT: "day free trial",
+      trialD: "Try every feature before you pay. Your data stays when you subscribe.",
+      manT: "Illustrated user manual",
+      manD: "Every screen explained with screenshots, from first login to reports. PDF to print or read.",
+      manAr: "Arabic manual",
+      manEn: "English manual",
       contactT: "Need help installing?",
       contactD: "Reach the developer directly on WhatsApp or by email.",
       email: "Email",
@@ -788,6 +920,7 @@
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       el.innerHTML = dict[el.getAttribute("data-i18n")] || "";
     });
+    if (!ready) return;
     document.getElementById("dl").href = release.url;
     document.getElementById("ver").textContent = "v" + release.version;
     document.getElementById("news-ver").textContent = "v" + release.version;
@@ -809,6 +942,8 @@
     render();
   });
 
+  var ready = false;
+  function settle() { ready = true; render(); document.documentElement.classList.add("rel-ready"); }
   document.getElementById("year").textContent = new Date().getFullYear();
   render();
   if (window.lucide) lucide.createIcons();
@@ -818,7 +953,7 @@
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (r) {
       var exe = (r.assets || []).filter(function (a) { return /^V-Lab-Setup-.*\.exe$/i.test(a.name); })[0];
-      if (!exe) return;
+      if (!exe) return settle();
       release.version = String(r.tag_name || "").replace(/^v/, "") || release.version;
       release.url = exe.browser_download_url;
       release.bytes = exe.size;
@@ -829,9 +964,9 @@
         .filter(Boolean)
         .map(function (l) { return l.replace(/\s*في الإعدادات ← .*$|\s*\(الإعدادات ← [^)]*\)/, ""); });
       if (notes.length) release.notes = notes;
-      render();
+      settle();
     })
-    .catch(function () { /* keep the built-in fallback */ });
+    .catch(function () { settle(); /* built-in fallback */ });
 })();
 </script>
 </body>
