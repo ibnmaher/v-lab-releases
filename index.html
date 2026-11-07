@@ -948,6 +948,15 @@
   render();
   if (window.lucide) lucide.createIcons();
 
+  // Counts only (the vendor's dashboard): a visit once per browser a day, and download clicks.
+  var COUNTER = "https://vlab-heartbeat.ibnmaher.workers.dev/traffic?k=";
+  var hit = function (k) { try { navigator.sendBeacon(COUNTER + k); } catch (e) {} };
+  try {
+    var today = new Date().toISOString().slice(0, 10);
+    if (localStorage.getItem("vlab-visit-day") !== today) { localStorage.setItem("vlab-visit-day", today); hit("visit"); }
+  } catch (e) { hit("visit"); }
+  document.getElementById("dl").addEventListener("click", function () { hit("download"); });
+
   // Live release info, so the page never needs editing after a release.
   fetch(API, { headers: { Accept: "application/vnd.github+json" } })
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
