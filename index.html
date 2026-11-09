@@ -342,6 +342,16 @@
   .news-note a { color: var(--accent); text-decoration: none; }
   .news-note a:hover { text-decoration: underline; }
 
+  /* ── Video ─────────────────────────── */
+  .video {
+    aspect-ratio: 16 / 9;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
   /* ── Install steps ─────────────────── */
   .steps {
     display: grid;
@@ -666,6 +676,17 @@
       </article>
     </section>
 
+    <!-- Video walkthrough -->
+    <div class="section-head" id="video">
+      <div>
+        <span class="eyebrow" data-i18n="videoEyebrow"></span>
+        <h2 data-i18n="videoT"></h2>
+      </div>
+    </div>
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/Y0F0s93lEGY" title="شرح كامل لبرنامج V-Lab لإدارة المختبرات الطبية خطوة بخطوة" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
     <!-- Install -->
     <div class="section-head">
       <div>
@@ -800,6 +821,8 @@
       newsAll: "كل الإصدارات ←",
       updatesT: "تحديث من داخل البرنامج",
       updatesD: "الإعدادات ← التحديثات. بدون إعادة تثبيت وبدون فقدان بيانات.",
+      videoEyebrow: "فيديو",
+      videoT: "شرح كامل للبرنامج خطوة بخطوة",
       installEyebrow: "التثبيت",
       installT: "جاهز للعمل خلال دقائق",
       s1T: "نزّل الملف",
@@ -862,6 +885,8 @@
       newsAll: "All releases →",
       updatesT: "Updates from inside the app",
       updatesD: "Settings → Updates. No reinstall, no lost data.",
+      videoEyebrow: "Video",
+      videoT: "A full step-by-step walkthrough (in Arabic)",
       installEyebrow: "Install",
       installT: "Up and running in minutes",
       s1T: "Download the installer",
