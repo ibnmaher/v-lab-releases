@@ -6,11 +6,34 @@
 <title>V-Lab Download</title>
 <meta name="description" content="V-Lab: برنامج إدارة المختبرات الطبية. نزّل أحدث نسخة لويندوز.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 430 387'%3E%3Cg fill='%2338a3a5'%3E%3Crect height='386.471' width='80' rx='40' transform='rotate(30 360.537 11.9213)' x='360.537' y='11.9213'/%3E%3Crect height='231' width='80' rx='40' transform='rotate(90 249.301 10.2051)' x='249.301' y='10.2051'/%3E%3Cpath d='M20 74.641C8.95 55.51 15.51 31.05 34.64 20 53.77 8.95 78.24 15.51 89.28 34.64L249.28 311.77C260.33 330.9 253.77 355.36 234.64 366.41 215.51 377.46 191.05 370.9 180 351.77L20 74.641Z'/%3E%3C/g%3E%3C/svg%3E">
+<script>try { if (localStorage.getItem("vlab-dl-theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Light is the default; the nav toggle sets data-theme="dark". */
   :root {
+    --bg: #eef1f1;
+    --surface: #ffffff;
+    --surface-high: #f6fafa;
+    --border: rgba(10, 30, 32, 0.08);
+    --border-strong: rgba(10, 30, 32, 0.16);
+    --accent: #1f7f81;
+    --accent-strong: #176a6c;
+    --accent-ink: #ffffff;
+    --accent-subtle: rgba(31, 127, 129, 0.35);
+    --accent-wash: rgba(31, 127, 129, 0.08);
+    --warn: #b86e12;
+    --text: #0f1b1c;
+    --muted: #5b6b6c;
+    --faint: #93a1a2;
+    --radius: 22px;
+    --gap: 14px;
+    --display: "Readex Pro", "IBM Plex Sans Arabic", sans-serif;
+    --body: "IBM Plex Sans Arabic", "Readex Pro", sans-serif;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
     --bg: #0b0d0e;
     --surface: #121617;
     --surface-high: #172022;
@@ -25,30 +48,7 @@
     --text: #eef2f2;
     --muted: #8d9a9b;
     --faint: #5b6869;
-    --radius: 22px;
-    --gap: 14px;
-    --display: "Readex Pro", "IBM Plex Sans Arabic", sans-serif;
-    --body: "IBM Plex Sans Arabic", "Readex Pro", sans-serif;
     color-scheme: dark;
-  }
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --bg: #eef1f1;
-      --surface: #ffffff;
-      --surface-high: #f6fafa;
-      --border: rgba(10, 30, 32, 0.08);
-      --border-strong: rgba(10, 30, 32, 0.16);
-      --accent: #1f7f81;
-      --accent-strong: #176a6c;
-      --accent-ink: #ffffff;
-      --accent-subtle: rgba(31, 127, 129, 0.35);
-      --accent-wash: rgba(31, 127, 129, 0.08);
-      --warn: #b86e12;
-      --text: #0f1b1c;
-      --muted: #5b6b6c;
-      --faint: #93a1a2;
-      color-scheme: light;
-    }
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -88,6 +88,11 @@
   }
   .lang:hover { color: var(--text); border-color: var(--accent-subtle); }
   .lang svg { width: 15px; height: 15px; }
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  .theme { padding: 7px; width: 34px; height: 34px; justify-content: center; }
+  .theme .sun, [data-theme="dark"] .theme .moon { display: none; }
+  [data-theme="dark"] .theme .sun { display: inline-flex; }
+  .theme span { display: inline-flex; }
 
   /* ── Section headings ──────────────── */
   .eyebrow {
@@ -548,7 +553,10 @@
       <svg viewBox="0 0 430 387" aria-hidden="true"><rect height="386.471" width="80" rx="40" transform="rotate(30 360.537 11.9213)" x="360.537" y="11.9213"/><rect height="231" width="80" rx="40" transform="rotate(90 249.301 10.2051)" x="249.301" y="10.2051"/><path d="M20 74.641C8.95431 55.5093 15.5093 31.0457 34.641 20C53.7727 8.95431 78.2363 15.5093 89.282 34.641L249.282 311.769C260.328 330.901 253.773 355.364 234.641 366.41C215.509 377.456 191.046 370.901 180 351.769L20 74.641Z"/></svg>
       <span>V-Lab</span>
     </a>
-    <button class="lang" id="lang" type="button"><i data-lucide="languages"></i><span data-i18n="langBtn"></span></button>
+    <div class="nav-actions">
+      <button class="lang theme" id="theme" type="button"><span class="moon"><i data-lucide="moon"></i></span><span class="sun"><i data-lucide="sun"></i></span></button>
+      <button class="lang" id="lang" type="button"><i data-lucide="languages"></i><span data-i18n="langBtn"></span></button>
+    </div>
   </nav>
 
   <main>
@@ -799,6 +807,7 @@
   var T = {
     ar: {
       langBtn: "English",
+      themeBtn: "تبديل الوضع الفاتح / الداكن",
       heroEyebrow: "برنامج إدارة المختبرات الطبية",
       heroTitle: "مختبرك كله في برنامج واحد.",
       heroSub: "المرضى والفواتير والنتائج والتقارير والمخزن والمالية. يعمل على حاسبة المختبر بدون إنترنت، ويُثبّت بخطوة واحدة.",
@@ -863,6 +872,7 @@
     },
     en: {
       langBtn: "العربية",
+      themeBtn: "Switch light / dark theme",
       heroEyebrow: "Clinical lab management",
       heroTitle: "Your whole lab in one app.",
       heroSub: "Patients, invoices, results, reports, storage and finance. Runs on the lab PC without internet, installed in one step.",
@@ -945,6 +955,9 @@
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       el.innerHTML = dict[el.getAttribute("data-i18n")] || "";
     });
+    var th = document.getElementById("theme");
+    th.setAttribute("aria-label", dict.themeBtn);
+    th.title = dict.themeBtn;
     if (!ready) return;
     document.getElementById("dl").href = release.url;
     document.getElementById("ver").textContent = "v" + release.version;
@@ -960,6 +973,13 @@
       ul.appendChild(li);
     });
   }
+
+  document.getElementById("theme").addEventListener("click", function () {
+    var root = document.documentElement;
+    var dark = root.dataset.theme !== "dark";
+    if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
+    try { localStorage.setItem("vlab-dl-theme", dark ? "dark" : "light"); } catch (e) {}
+  });
 
   document.getElementById("lang").addEventListener("click", function () {
     lang = lang === "ar" ? "en" : "ar";
