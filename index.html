@@ -423,7 +423,7 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--gap);
-    grid-template-areas: "yearly yearly monthly trial";
+    grid-template-areas: "yearly yearly once once" "monthly monthly trial trial";
   }
   .c-yearly {
     grid-area: yearly;
@@ -435,6 +435,7 @@
   }
   [dir="ltr"] .c-yearly { background: radial-gradient(110% 120% at 0% 0%, rgba(56,163,165,.2), transparent 60%), var(--surface-high); }
   .c-monthly { grid-area: monthly; }
+  .c-once { grid-area: once; }
   .c-trial { grid-area: trial; background: linear-gradient(180deg, var(--accent-wash), transparent 70%), var(--surface); }
   .c-trial .big { font-size: 56px; }
   .c-trial h3 { margin-top: 8px; }
@@ -517,7 +518,7 @@
     .c-hero { min-height: 0; padding: 32px; }
     .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .strip { grid-template-columns: 1fr; }
-    .pricing { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "yearly yearly" "monthly trial"; }
+    .pricing { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "yearly yearly" "once once" "monthly trial"; }
   }
   @media (max-width: 560px) {
     .wrap { padding: 0 16px; }
@@ -529,7 +530,7 @@
     .c-history { flex-direction: column; }
     .steps { grid-template-columns: 1fr; }
     .reqs { grid-template-columns: 1fr; }
-    .pricing { grid-template-columns: 1fr; grid-template-areas: "yearly" "monthly" "trial"; }
+    .pricing { grid-template-columns: 1fr; grid-template-areas: "yearly" "once" "monthly" "trial"; }
     .c-yearly { padding: 26px 22px; }
     .c-manual { padding: 24px 22px; }
     .man-links, .man-btn { width: 100%; }
@@ -739,6 +740,11 @@
         </div>
         <p data-i18n="planYearlyD"></p>
       </article>
+      <article class="cell c-once">
+        <h3 data-i18n="planOnce"></h3>
+        <div class="price"><b class="ltr">400,000</b><span data-i18n="perOnce"></span></div>
+        <p data-i18n="planOnceD"></p>
+      </article>
       <article class="cell c-monthly">
         <h3 data-i18n="planMonthly"></h3>
         <div class="price"><b class="ltr">30,000</b><span data-i18n="perMonth"></span></div>
@@ -847,10 +853,13 @@
       req2: "<b>حساب مسؤول</b> على الحاسبة",
       req3: "<b>1.5 غيغابايت</b> مساحة فارغة على الأقل",
       req4: "<b>لا يحتاج إنترنت</b> للعمل اليومي",
-      licT: "تجربة مجانية ثم اشتراك",
-      licD: "بعد التثبيت أرسل لنا رمز الجهاز من شاشة الترخيص، فنرسل لك مفتاح تجربة مجانية لمدة 14 يوماً بكل الميزات. بعدها اشتراك شهري أو سنوي لكل جهاز، وتبقى كل بياناتك كما هي.",
+      licT: "تجربة مجانية ثم اشتراك أو شراء",
+      licD: "بعد التثبيت أرسل لنا رمز الجهاز من شاشة الترخيص، فنرسل لك مفتاح تجربة مجانية لمدة 14 يوماً بكل الميزات. بعدها اشتراك شهري أو سنوي، أو شراء لمرة واحدة، لكل جهاز، وتبقى كل بياناتك كما هي.",
       trialLine: "جرّبه مجاناً لمدة 14 يوماً بكل الميزات",
-      priceT: "اشتراك واحد لكل جهاز، بكل الميزات",
+      priceT: "اشتراك أو شراء لمرة واحدة، لكل جهاز وبكل الميزات",
+      planOnce: "شراء لمرة واحدة",
+      perOnce: "دينار، مرة واحدة",
+      planOnceD: "النسخة الحالية لك بلا تاريخ انتهاء، مع إصلاح الأخطاء لمدة 6 أشهر. التحديثات بعدها اختيارية: 75,000 دينار في السنة.",
       planYearly: "سنوي",
       planMonthly: "شهري",
       save: "خصم 33%",
@@ -859,7 +868,7 @@
       planYearlyD: "يعادل 20,000 دينار شهرياً. كل الميزات والتحديثات والدعم.",
       planMonthlyD: "كل الميزات والتحديثات والدعم، تدفع شهراً بشهر.",
       trialT: "يوماً تجربة مجانية",
-      trialD: "جرّب كل الميزات قبل أن تدفع. تبقى بياناتك عند الاشتراك.",
+      trialD: "جرّب كل الميزات قبل أن تدفع. تبقى بياناتك عند الاشتراك أو الشراء.",
       manT: "دليل المستخدم المصوّر",
       manD: "شرح كل شاشة بالصور، من أول تسجيل إلى التقارير. PDF للطباعة أو القراءة.",
       manAr: "الدليل بالعربية",
@@ -912,10 +921,13 @@
       req2: "<b>An administrator account</b> on the PC",
       req3: "<b>1.5 GB</b> free disk space or more",
       req4: "<b>No internet needed</b> for daily work",
-      licT: "Free trial, then subscribe",
-      licD: "After installing, send us the machine code from the license screen and we'll send a free 14-day trial key with every feature. After that it's a monthly or yearly subscription per PC, and all your data stays.",
+      licT: "Free trial, then subscribe or buy",
+      licD: "After installing, send us the machine code from the license screen and we'll send a free 14-day trial key with every feature. After that it's a monthly or yearly subscription, or a one-time purchase, per PC, and all your data stays.",
       trialLine: "Try it free for 14 days, every feature included",
-      priceT: "One subscription per PC, every feature",
+      priceT: "Subscribe or buy once, per PC, every feature",
+      planOnce: "One-time purchase",
+      perOnce: "IQD, once",
+      planOnceD: "The current version is yours with no end date, with bug fixes for 6 months. Updates after that are optional: 75,000 IQD a year.",
       planYearly: "Yearly",
       planMonthly: "Monthly",
       save: "33% off",
@@ -924,7 +936,7 @@
       planYearlyD: "Works out to 20,000 IQD a month. Every feature, update and support.",
       planMonthlyD: "Every feature, update and support, paid month to month.",
       trialT: "day free trial",
-      trialD: "Try every feature before you pay. Your data stays when you subscribe.",
+      trialD: "Try every feature before you pay. Your data stays when you subscribe or buy.",
       manT: "Illustrated user manual",
       manD: "Every screen explained with screenshots, from first login to reports. PDF to print or read.",
       manAr: "Arabic manual",
