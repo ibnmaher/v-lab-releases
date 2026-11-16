@@ -454,6 +454,13 @@
   .price-row .price { margin: 0; }
   .price b { font: 700 34px/1.1 var(--display); letter-spacing: -0.02em; color: var(--text); }
   .c-yearly .price b { font-size: 52px; letter-spacing: -0.03em; }
+  /* What each plan includes: the same check list as the requirements. */
+  .feats { list-style: none; display: grid; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .feats li { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: var(--muted); }
+  .feats li svg { width: 16px; height: 16px; color: var(--accent); flex: none; margin-top: 3px; }
+  .feats li.no { color: var(--faint); }
+  .feats li.no svg { color: var(--faint); }
+  .feats b { color: var(--text); font-weight: 600; }
   .c-manual {
     margin-top: 64px;
     flex-direction: row; align-items: center; gap: 20px; flex-wrap: wrap;
@@ -740,16 +747,36 @@
           <div class="price"><b class="ltr">240,000</b><span data-i18n="perYear"></span></div>
         </div>
         <p data-i18n="planYearlyD"></p>
+        <ul class="feats">
+          <li><i data-lucide="check"></i><span data-i18n="fCore"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fMulti"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fDaily"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fThemes"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fUpdates"></span></li>
+        </ul>
       </article>
       <article class="cell c-once">
         <h3 data-i18n="planOnce"></h3>
         <div class="price"><b class="ltr">400,000</b><span data-i18n="perOnce"></span></div>
         <p data-i18n="planOnceD"></p>
+        <ul class="feats">
+          <li><i data-lucide="check"></i><span data-i18n="fCore"></span></li>
+          <li class="no"><i data-lucide="minus"></i><span data-i18n="fOnePc"></span></li>
+          <li class="no"><i data-lucide="minus"></i><span data-i18n="fNoDaily"></span></li>
+          <li class="no"><i data-lucide="minus"></i><span data-i18n="fThemesPaid"></span></li>
+        </ul>
       </article>
       <article class="cell c-monthly">
         <h3 data-i18n="planMonthly"></h3>
         <div class="price"><b class="ltr">30,000</b><span data-i18n="perMonth"></span></div>
         <p data-i18n="planMonthlyD"></p>
+        <ul class="feats">
+          <li><i data-lucide="check"></i><span data-i18n="fCore"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fMulti"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fDaily"></span></li>
+          <li class="no"><i data-lucide="minus"></i><span data-i18n="fThemesPaid"></span></li>
+          <li><i data-lucide="check"></i><span data-i18n="fUpdates"></span></li>
+        </ul>
       </article>
       <article class="cell c-trial">
         <div class="ico-wrap"><i data-lucide="gift" class="ico"></i></div>
@@ -855,9 +882,9 @@
       req3: "<b>1.5 غيغابايت</b> مساحة فارغة على الأقل",
       req4: "<b>لا يحتاج إنترنت</b> للعمل اليومي",
       licT: "تجربة مجانية ثم اشتراك أو شراء",
-      licD: "بعد التثبيت أرسل لنا رمز الجهاز من شاشة الترخيص، فنرسل لك مفتاح تجربة مجانية لمدة 14 يوماً بكل الميزات. بعدها اشتراك شهري أو سنوي، أو شراء لمرة واحدة، لكل جهاز، وتبقى كل بياناتك كما هي.",
+      licD: "بعد التثبيت أرسل لنا رمز الجهاز من شاشة الترخيص، فنرسل لك مفتاح تجربة مجانية لمدة 14 يوماً بكل الميزات. بعدها اشتراك شهري أو سنوي، أو شراء لمرة واحدة، وتبقى كل بياناتك كما هي.",
       trialLine: "جرّبه مجاناً لمدة 14 يوماً بكل الميزات",
-      priceT: "اشتراك أو شراء لمرة واحدة، لكل جهاز وبكل الميزات",
+      priceT: "اشتراك أو شراء لمرة واحدة، والسنوي يشمل كل شيء",
       planOnce: "شراء لمرة واحدة",
       perOnce: "دينار، مرة واحدة",
       planOnceD: "النسخة الحالية لك بلا تاريخ انتهاء، مع إصلاح الأخطاء لمدة 6 أشهر. التحديثات بعدها اختيارية: 75,000 دينار في السنة.",
@@ -866,8 +893,16 @@
       save: "خصم 33%",
       perYear: "دينار / سنة",
       perMonth: "دينار / شهر",
-      planYearlyD: "يعادل 20,000 دينار شهرياً. كل الميزات والتحديثات والدعم.",
-      planMonthlyD: "كل الميزات والتحديثات والدعم، تدفع شهراً بشهر.",
+      planYearlyD: "يعادل 20,000 دينار شهرياً.",
+      planMonthlyD: "تدفع شهراً بشهر.",
+      fCore: "كل أعمال المختبر: المرضى والفواتير والنتائج والتقارير والمالية",
+      fMulti: "<b>عدة أجهزة</b> في المختبر تعمل معاً على ترخيص واحد",
+      fOnePc: "جهاز واحد فقط",
+      fDaily: "<b>تقرير يومي</b> بالإيرادات والمصروفات إلى واتساب المالك",
+      fNoDaily: "بلا التقرير اليومي عبر واتساب",
+      fThemes: "<b>جميع أشكال التقارير المدفوعة مجاناً</b>",
+      fThemesPaid: "أشكال التقارير المدفوعة تُشترى منفردة",
+      fUpdates: "التحديثات والدعم عبر واتساب",
       trialT: "يوماً تجربة مجانية",
       trialD: "جرّب كل الميزات قبل أن تدفع. تبقى بياناتك عند الاشتراك أو الشراء.",
       manT: "دليل المستخدم المصوّر",
@@ -923,9 +958,9 @@
       req3: "<b>1.5 GB</b> free disk space or more",
       req4: "<b>No internet needed</b> for daily work",
       licT: "Free trial, then subscribe or buy",
-      licD: "After installing, send us the machine code from the license screen and we'll send a free 14-day trial key with every feature. After that it's a monthly or yearly subscription, or a one-time purchase, per PC, and all your data stays.",
+      licD: "After installing, send us the machine code from the license screen and we'll send a free 14-day trial key with every feature. After that it's a monthly or yearly subscription, or a one-time purchase, and all your data stays.",
       trialLine: "Try it free for 14 days, every feature included",
-      priceT: "Subscribe or buy once, per PC, every feature",
+      priceT: "Subscribe or buy once. Yearly includes everything",
       planOnce: "One-time purchase",
       perOnce: "IQD, once",
       planOnceD: "The current version is yours with no end date, with bug fixes for 6 months. Updates after that are optional: 75,000 IQD a year.",
@@ -934,8 +969,16 @@
       save: "33% off",
       perYear: "IQD / year",
       perMonth: "IQD / month",
-      planYearlyD: "Works out to 20,000 IQD a month. Every feature, update and support.",
-      planMonthlyD: "Every feature, update and support, paid month to month.",
+      planYearlyD: "Works out to 20,000 IQD a month.",
+      planMonthlyD: "Paid month to month.",
+      fCore: "All lab work: patients, invoices, results, reports, finance",
+      fMulti: "<b>Several PCs</b> in the lab working together on one license",
+      fOnePc: "One PC only",
+      fDaily: "<b>Daily report</b> of income and expenses to the owner's WhatsApp",
+      fNoDaily: "No daily WhatsApp report",
+      fThemes: "<b>Every paid report theme, free</b>",
+      fThemesPaid: "Paid report themes bought separately",
+      fUpdates: "Updates and WhatsApp support",
       trialT: "day free trial",
       trialD: "Try every feature before you pay. Your data stays when you subscribe or buy.",
       manT: "Illustrated user manual",
